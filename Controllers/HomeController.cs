@@ -1,21 +1,38 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using DogList.Objects;
+using ToDoList.Objects;
 
-namespace DogList.Controllers
+namespace ToDoList.Controllers
 {
     public class HomeController : Controller
     {
 
-// HOME AND VIEW ALL ROUTES
-
-        [HttpGet("/")]
+        [Route("/")]
         public ActionResult Index()
         {
             return View();
+        }
+
+        [Route("view_all_tasks")]
+        public ActionResult ViewAll()
+        {
+            List<string> allTasks = Task.GetAll();
+            return View(allTasks);
+        }
+
+        [HttpPost("/tasks_cleared")]
+        public ActionResult ClearAll()
+        {
+            Task.ClearAll();
+            return View();
+        }
+
+        [HttpPost("/task_added")]
+        public ActionResult AddTask()
+        {
+            Task newTask = new Task (Request.Form["new-task"]);
+            newTask.Save();
+            return View(newTask);
         }
 
     }

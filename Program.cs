@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Microsoft.AspNetCore.Hosting;
 
-namespace DogList
+namespace ToDoList
 {
     public class Program
     {
