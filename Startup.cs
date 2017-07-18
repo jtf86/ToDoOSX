@@ -36,8 +36,4 @@ namespace DogList
       }
     }
 
-    public static class DBConfiguration
-    {
-      public static string ConnectionString = "Server=localhost;Database=doglist;User Id=sa;Password=Epic0dus";
-    }
   }
