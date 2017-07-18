@@ -1,38 +1,31 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using ToDoList.Objects;
+using RectangleChecker.Objects;
 
-namespace ToDoList.Controllers
+namespace RectangleChecker.Controllers
 {
     public class HomeController : Controller
     {
 
-        [Route("/")]
+        [HttpGet("/")]
         public ActionResult Index()
         {
-            return View();
+            return View("RectangleForm");
         }
 
-        [Route("view_all_tasks")]
-        public ActionResult ViewAll()
+        [HttpGet("/rectangle_result")]
+        public ActionResult Result()
         {
-            List<string> allTasks = Task.GetAll();
-            return View(allTasks);
-        }
-
-        [HttpPost("/tasks_cleared")]
-        public ActionResult ClearAll()
-        {
-            Task.ClearAll();
-            return View();
-        }
-
-        [HttpPost("/task_added")]
-        public ActionResult AddTask()
-        {
-            Task newTask = new Task (Request.Form["new-task"]);
-            newTask.Save();
-            return View(newTask);
+            Dictionary<string, object> Shapes = new Dictionary<string, object>();
+            Rectangle myRectangle = new Rectangle(Int32.Parse(Request.Query["side-length"]), Int32.Parse(Request.Query["side-width"]));
+            Shapes.Add("ResultingRectangle", myRectangle);
+            if (myRectangle.IsSquare())
+            {
+                Cube myCube = new Cube(myRectangle);
+                Shapes.Add("ResultingCube", myCube);
+            }
+            return View("RectangleResult", Shapes);
         }
 
     }
